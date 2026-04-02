@@ -90,6 +90,11 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+// Vercel Serverless Export configuration
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Server is running locally on http://localhost:${PORT}`);
+    });
+}
+
+module.exports = app;

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submissions Gallery | XINITY WebX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Plus+Jakarta+Sans:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="ambient-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <!-- Navigation Overlay -->
+    <nav class="glass-nav">
+        <div class="logo-container">
+            <a href="/" style="text-decoration: none; display: flex; align-items: center; gap: 15px;">
+                <div style="font-family: var(--font-heading); color: var(--text-primary); font-size: 1.5rem; font-weight: bold; letter-spacing: -1px;">
+                    <span style="color: var(--neon-secondary);">XINITY</span> HQ
+                </div>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="/" class="nav-link">Back to Home</a></li>
+        </ul>
+    </nav>
+
+    <main style="padding: 100px 20px;">
+        
+        <!-- Upload Portal -->
+        <section class="section" style="max-width: 800px; margin: 0 auto 60px auto;">
+            <div class="glass-terminal">
+                <div class="terminal-header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                    <div class="terminal-title">Project Submission Gateway</div>
+                </div>
+                <div class="terminal-body">
+                    <h2>SECURE UPLOAD (MAX 100MB)</h2>
+                    <p>Verify your team identity to push your final PDF document to the servers.</p>
+                    <form id="uploadForm" class="cyber-form" style="margin-top: 20px;">
+                        <div class="input-group">
+                            <label>Registered Email</label>
+                            <input type="email" id="upEmail" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Passcode</label>
+                            <input type="password" id="upPass" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Project File (PDF Only)</label>
+                            <input type="file" id="upPdf" accept="application/pdf" required style="padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--matte-border); color: var(--text-primary); border-radius: 8px;">
+                        </div>
+                        <button type="submit" class="btn-submit">
+                            <span>TRANSMIT DOCUMENT</span>
+                            <div class="btn-backdrop"></div>
+                        </button>
+                    </form>
+                    <div id="uploadStatus" style="display: none; margin-top: 1rem; text-align: center; font-family: 'Space Grotesk', sans-serif;"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Gallery -->
+        <section class="section" style="max-width: 1200px; margin: 0 auto;">
+            <h2 class="glitch-title text-center" style="margin-bottom: 40px; font-size: 3rem;">HACKER ROSTER</h2>
+            <div id="galleryGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px;">
+                <!-- Filled dynamically by JavaScript -->
+            </div>
+        </section>
+        
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Handle File Upload
+            const uploadForm = document.getElementById('uploadForm');
+            if(uploadForm) {
+                uploadForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const status = document.getElementById('uploadStatus');
+                    const btn = uploadForm.querySelector('.btn-submit');
+                    const originalHTML = btn.innerHTML;
+                    
+                    btn.innerHTML = '<span>UPLOADING...</span><div class="btn-backdrop" style="left:0"></div>';
+                    status.style.display = 'block';
+                    status.style.color = 'var(--neon-secondary)';
+                    status.innerText = '[Transmitting secure datastream...]';
+                    
+                    const formData = new FormData();
+                    formData.append('email', document.getElementById('upEmail').value);
+                    formData.append('passcode', document.getElementById('upPass').value);
+                    formData.append('projectPdf', document.getElementById('upPdf').files[0]);
+
+                    try {
+                        const response = await fetch('/api/upload-pdf', {
+                            method: 'POST',
+                            body: formData
+                        });
+                        const data = await response.json();
+                        
+                        if(response.ok && data.success) {
+                            status.style.color = 'var(--neon-secondary)';
+                            status.innerText = '[Upload Successful: File Encrypted & Saved]';
+                            uploadForm.reset();
+                        } else {
+                            status.style.color = '#ff3366';
+                            status.innerText = '[Error: ' + data.message + ']';
+                        }
+                    } catch(err) {
+                        status.style.color = '#ff3366';
+                        status.innerText = '[Critical Error: Upload Failed]';
+                    }
+                    btn.innerHTML = originalHTML;
+                });
+            }
+
+            // Fetch and Render Teams
+            const loadTeams = async () => {
+                const grid = document.getElementById('galleryGrid');
+                try {
+                    const response = await fetch('/api/teams');
+                    const data = await response.json();
+                    
+                    if(response.ok && data.success) {
+                        grid.innerHTML = '';
+                        data.teams.forEach(team => {
+                            const logoSrc = team.logoPath ? team.logoPath : '/assets/default-team.png';
+                            const card = document.createElement('div');
+                            card.className = 'glass-card matte-panel';
+                            card.style.textAlign = 'center';
+                            card.style.padding = '30px 20px';
+                            card.style.borderTop = '3px solid var(--neon-secondary)';
+                            card.innerHTML = `
+                                <img src="${logoSrc}" alt="Logo" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; border: 2px solid var(--neon-secondary); box-shadow: 0 0 15px rgba(255, 51, 102, 0.2);">
+                                <h3 style="color: var(--neon-primary); font-size: 1.5rem; margin-bottom: 5px; font-family: var(--font-heading);">${team.teamName}</h3>
+                                <p style="color: var(--text-primary); font-size: 0.9rem; margin-bottom: 5px;">${team.collegeName || 'Hacker Network'}</p>
+                                <p style="color: var(--text-secondary); font-size: 0.8rem;">Lead: ${team.leaderName || 'Unknown'}</p>
+                            `;
+                            grid.appendChild(card);
+                        });
+                    }
+                } catch (error) {
+                    grid.innerHTML = '<p style="color: #ff3366; text-align: center; width: 100%;">Failed to load roster.</p>';
+                }
+            };
+            
+            loadTeams();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Operations | XINITY WebX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Plus+Jakarta+Sans:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body style="background: var(--bg-primary); color: var(--text-primary); font-family: 'Plus Jakarta Sans', sans-serif;">
+    <main style="padding: 50px 20px; max-width: 1200px; margin: 0 auto;">
+        
+        <h1 class="glitch-title" style="color: var(--neon-primary); margin-bottom: 20px;">[ADMIN OVERRIDE] HACKATHON ROSTER</h1>
+        <p style="color: var(--text-secondary); margin-bottom: 40px; font-family: 'Space Grotesk', sans-serif;">Authorized view of all registered teams and sensitive PDF project submissions.</p>
+
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; background: var(--matte-panel); border: 1px solid var(--matte-border);">
+                <thead>
+                    <tr style="background: rgba(255, 51, 102, 0.1); font-family: 'Space Grotesk', sans-serif; text-align: left;">
+                        <th style="padding: 15px; border-bottom: 1px solid var(--neon-secondary); color: var(--neon-secondary);">Team Name</th>
+                        <th style="padding: 15px; border-bottom: 1px solid var(--neon-secondary); color: var(--neon-secondary);">College</th>
+                        <th style="padding: 15px; border-bottom: 1px solid var(--neon-secondary); color: var(--neon-secondary);">Members</th>
+                        <th style="padding: 15px; border-bottom: 1px solid var(--neon-secondary); color: var(--neon-secondary);">Project Submission</th>
+                    </tr>
+                </thead>
+                <tbody id="adminTableBody">
+                    <!-- Populated dynamically -->
+                </tbody>
+            </table>
+        </div>
+        
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const tableBody = document.getElementById('adminTableBody');
+            
+            try {
+                const response = await fetch('/api/teams');
+                const data = await response.json();
+                
+                if(response.ok && data.success) {
+                    tableBody.innerHTML = '';
+                    data.teams.forEach(team => {
+                        const tr = document.createElement('tr');
+                        tr.style.borderBottom = '1px solid var(--matte-border)';
+                        
+                        // Fallbacks
+                        const m2 = team.member2Name ? `, ${team.member2Name}` : '';
+                        const m3 = team.member3Name ? `, ${team.member3Name}` : '';
+                        const membersStr = `${team.leaderName}${m2}${m3}`;
+                        
+                        const pdfLink = team.pdfPath 
+                            ? `<a href="${team.pdfPath}" target="_blank" style="color: var(--neon-primary); text-decoration: none; font-weight: bold;">[VIEW PDF]</a>` 
+                            : `<span style="color: var(--text-secondary);">No Submission Yet</span>`;
+
+                        tr.innerHTML = `
+                            <td style="padding: 15px; font-weight: bold;">${team.teamName}</td>
+                            <td style="padding: 15px;">${team.collegeName || 'N/A'}</td>
+                            <td style="padding: 15px;">${membersStr}</td>
+                            <td style="padding: 15px;">${pdfLink}</td>
+                        `;
+                        tableBody.appendChild(tr);
+                    });
+                }
+            } catch (err) {
+                tableBody.innerHTML = '<tr><td colspan="4" style="color: red; padding: 15px;">Failed to load data.</td></tr>';
+            }
+        });
+    </script>
+</body>
+</html>

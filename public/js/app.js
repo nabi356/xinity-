@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 5. Registration Form DB Submission
+    // 5. Registration Form DB Submission (Multipart Formdata)
     const registerForm = document.getElementById('registerForm');
     if (registerForm) {
         registerForm.addEventListener('submit', async (e) => {
@@ -116,18 +116,25 @@ document.addEventListener('DOMContentLoaded', () => {
             
             btn.innerHTML = '<span>Submitting...</span><div class="btn-backdrop" style="left:0"></div>';
             
-            const payload = {
-                teamName: document.getElementById('teamName').value,
-                email: document.getElementById('email').value,
-                teamSize: document.getElementById('teamSize').value,
-                passcode: document.getElementById('regPass').value
-            };
+            const formData = new FormData();
+            formData.append('teamName', document.getElementById('teamName').value);
+            formData.append('collegeName', document.getElementById('collegeName').value);
+            formData.append('leaderName', document.getElementById('leaderName').value);
+            formData.append('member2Name', document.getElementById('member2Name').value);
+            formData.append('member3Name', document.getElementById('member3Name').value);
+            formData.append('email', document.getElementById('email').value);
+            formData.append('teamSize', document.getElementById('teamSize').value);
+            formData.append('passcode', document.getElementById('regPass').value);
+            
+            const logoFile = document.getElementById('teamLogo').files[0];
+            if (logoFile) {
+                formData.append('teamLogo', logoFile);
+            }
 
             try {
                 const response = await fetch('/api/register', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                    body: formData
                 });
                 
                 const data = await response.json();

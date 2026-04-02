@@ -39,7 +39,7 @@
                     <div class="terminal-title">Project Submission Gateway</div>
                 </div>
                 <div class="terminal-body">
-                    <h2>SECURE UPLOAD (MAX 100MB)</h2>
+                    <h2>SECURE UPLOAD (MAX 4MB VERCEL LIMIT)</h2>
                     <p>Verify your team identity to push your final PDF document to the servers.</p>
                     <form id="uploadForm" class="cyber-form" style="margin-top: 20px;">
                         <div class="input-group">
@@ -84,17 +84,26 @@
                     e.preventDefault();
                     const status = document.getElementById('uploadStatus');
                     const btn = uploadForm.querySelector('.btn-submit');
+                    const fileInput = document.getElementById('upPdf');
+                    
+                    if(fileInput.files[0] && fileInput.files[0].size > 4.5 * 1024 * 1024) {
+                        status.style.display = 'block';
+                        status.style.color = '#ffcc00';
+                        status.innerText = '[Warning: File exceeds 4MB Vercel serverless limit]';
+                        return;
+                    }
+
                     const originalHTML = btn.innerHTML;
                     
                     btn.innerHTML = '<span>UPLOADING...</span><div class="btn-backdrop" style="left:0"></div>';
                     status.style.display = 'block';
                     status.style.color = 'var(--neon-secondary)';
-                    status.innerText = '[Transmitting secure datastream...]';
+                    status.innerText = '[Transmitting secure base64 datastream...]';
                     
                     const formData = new FormData();
                     formData.append('email', document.getElementById('upEmail').value);
                     formData.append('passcode', document.getElementById('upPass').value);
-                    formData.append('projectPdf', document.getElementById('upPdf').files[0]);
+                    formData.append('projectPdf', fileInput.files[0]);
 
                     try {
                         const response = await fetch('/api/upload-pdf', {
@@ -129,7 +138,7 @@
                     if(response.ok && data.success) {
                         grid.innerHTML = '';
                         data.teams.forEach(team => {
-                            const logoSrc = team.logoPath ? team.logoPath : '/assets/default-team.png';
+                            const logoSrc = team.logoData ? team.logoData : '/assets/default-team.png';
                             const card = document.createElement('div');
                             card.className = 'glass-card matte-panel';
                             card.style.textAlign = 'center';

@@ -50,8 +50,8 @@
                         const m3 = team.member3Name ? `, ${team.member3Name}` : '';
                         const membersStr = `${team.leaderName}${m2}${m3}`;
                         
-                        const pdfLink = team.pdfPath 
-                            ? `<a href="${team.pdfPath}" target="_blank" style="color: var(--neon-primary); text-decoration: none; font-weight: bold;">[VIEW PDF]</a>` 
+                        const pdfLink = team.pdfData 
+                            ? `<a download="${team.teamName.replace(/\s+/g, '_')}_Submission.pdf" href="${team.pdfData}" style="color: var(--neon-primary); text-decoration: none; font-weight: bold;">[DOWNLOAD PDF]</a>` 
                             : `<span style="color: var(--text-secondary);">No Submission Yet</span>`;
 
                         tr.innerHTML = `

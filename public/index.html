@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XINITY WebX Challenge | Futuristic Landing</title>
+
+    <!-- Modern Futuristic Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Plus+Jakarta+Sans:wght@300;500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Link to custom stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="loading">
+
+    <!-- Cinematic Preloader -->
+    <div id="preloader" class="cinematic-preloader">
+        <div class="preloader-text" style="display: flex;">
+            <span class="pl-char" style="animation-delay: 0.0s;">X</span>
+            <span class="pl-char" style="animation-delay: 0.2s;">I</span>
+            <span class="pl-char" style="animation-delay: 0.4s;">N</span>
+            <span class="pl-char" style="animation-delay: 0.6s;">I</span>
+            <span class="pl-char" style="animation-delay: 0.8s;">T</span>
+            <span class="pl-char" style="animation-delay: 1.0s;">Y</span>
+        </div>
+    </div>
+
+    <!-- Ambient background -->
+    <div class="ambient-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Navigation Overlay -->
+    <nav class="glass-nav">
+        <!-- Logo Upload Feature: Clicking this allows user to upload their own logo to display here -->
+        <div class="logo-container" id="logoUploadTrigger" title="Click to upload your custom logo">
+            <input type="file" id="logoInput" accept="image/png, image/jpeg, image/svg+xml" style="display: none;">
+            <img id="customLogo" src="https://via.placeholder.com/150x50/1c1c1f/00f0ff?text=UPLOAD+LOGO"
+                alt="Brand Logo">
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="#hero" class="nav-link">Home</a></li>
+            <li><a href="#about" class="nav-link">Challenge</a></li>
+            <li><a href="#timeline" class="nav-link">Timeline</a></li>
+            <li><a href="#rules" class="nav-link">Rules</a></li>
+            <li><a href="#rewards" class="nav-link">Rewards</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
+            <li class="nav-dropdown">
+                <a href="javascript:void(0)" class="btn-glow" style="padding-right: 18px;">Access <span
+                        class="dropdown-icon">▼</span></a>
+                <div class="dropdown-content">
+                    <a href="#register">Register Now</a>
+                    <a href="/login.html">Member Login</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- Home / Hero Section -->
+        <section id="hero" class="section hero-section">
+            <div class="hero-content">
+                <span class="eyebrow fade-up">XINITY HACKATHON COMMUNITY PRESENTS</span>
+                <h1 class="glitch-title" id="animatedTitle">WEB X CHALLENGE</h1>
+                <p class="subtitle fade-up delay-1">Design the future. Build the impossible. Leave a permanent mark on
+                    the Xinity platform.</p>
+                <div class="cta-group fade-up delay-2">
+                    <a href="#register" class="btn-primary">Register Now</a>
+                    <a href="#about" class="btn-secondary">Learn More</a>
+                </div>
+            </div>
+
+            <!-- 3D Matte Element -->
+            <div class="hero-graphic fade-in delay-3">
+                <div class="glass-cube">
+                    <div class="cube-face front"></div>
+                    <div class="cube-face back"></div>
+                    <div class="cube-face right"></div>
+                    <div class="cube-face left"></div>
+                    <div class="cube-face top"></div>
+                    <div class="cube-face bottom"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Spacer Divider -->
+        <div class="section-divider"></div>
+
+        <!-- About / Challenge Section -->
+        <section id="about" class="section about-section">
+            <div class="section-header scroll-reveal">
+                <h2>THE CHALLENGE</h2>
+                <div class="header-line"></div>
+            </div>
+
+            <div class="bento-grid">
+                <div class="glass-card matte-panel span-2 scroll-reveal text-left">
+                    <div class="card-icon">⚡</div>
+                    <h3>Redesign Reality</h3>
+                    <p>Participants must design and develop a fully functional, visually stunning webpage for the Xinity
+                        Hackathon Community and get an opportunity to be featured live on the official Xinity website.
+                    </p>
+                </div>
+
+                <div class="glass-card matte-panel scroll-reveal">
+                    <div class="card-icon">🛠️</div>
+                    <h3>AI Augmented</h3>
+                    <p>AI tools are officially allowed for design, ideation, and development. Push the absolute
+                        boundaries of what's possible.</p>
+                </div>
+
+                <div class="glass-card matte-panel scroll-reveal delay-1">
+                    <div class="card-icon">🏆</div>
+                    <h3>Glory & Recognition</h3>
+                    <p>Winners secure an official spot as a Xinity Tech Team Member, live website feature, and
+                        community-wide recognition.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <div class="section-divider"></div>
+
+        <!-- Timeline Section -->
+        <section id="timeline" class="section timeline-section">
+            <div class="section-header scroll-reveal">
+                <h2>EVENT TIMELINE</h2>
+                <div class="header-line"></div>
+            </div>
+
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+
+                <div class="timeline-node scroll-expand left">
+                    <div class="node-dot"></div>
+                    <div class="glass-card matte-panel timeline-content">
+                        <span class="date">APRIL 2 - 3, 2026</span>
+                        <h3>Round 1: Online Submission</h3>
+                        <p>Submit your futuristic redesign concept using the official XINITY PPT Template in PDF format.
+                            AI tools permitted.</p>
+                        <a href="assets/ppt-temp-WEB-X-CHALLENGE.pptx" download class="btn-glow"
+                            style="display: inline-block; margin-top: 15px; padding: 8px 16px; font-size: 0.85rem;"><span
+                                style="margin-right: 5px;">📥</span> Download Template</a>
+                    </div>
+                </div>
+
+                <div class="timeline-node scroll-expand right">
+                    <div class="node-dot"></div>
+                    <div class="glass-card matte-panel timeline-content">
+                        <span class="date">APRIL 4, 2026</span>
+                        <h3>Round 2: Offline Showcase</h3>
+                        <p>Selected teams must present a fully functional, working webpage to the judges offline.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <div class="section-divider"></div>
+
+        <!-- Rules Section -->
+        <section id="rules" class="section rules-section">
+            <div class="section-header scroll-reveal">
+                <h2>RULES & LIMITATIONS</h2>
+                <div class="header-line"></div>
+            </div>
+
+            <div class="bento-grid">
+                <div class="glass-card matte-panel span-2 scroll-reveal text-left">
+                    <div class="card-icon">📜</div>
+                    <h3>Eligibility & Teams</h3>
+                    <ul style="list-style-position: inside; color: var(--text-secondary); line-height: 1.8;">
+                        <li>Open to solo individuals or teams of <strong>maximum 3 members</strong>.</li>
+                        <li>All participants must be <strong>currently enrolled college students</strong>.</li>
+                        <li>Inter-college and inter-specialization teams are allowed.</li>
+                        <li>A participant cannot register in more than one team. Team composition is locked
+                            post-registration.</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card matte-panel scroll-reveal">
+                    <div class="card-icon">⚠️</div>
+                    <h3>Limitations</h3>
+                    <ul style="list-style-position: inside; color: var(--text-secondary); line-height: 1.8;">
+                        <li>All work must be <strong>100% original</strong> at its core logic. Plagiarism implies
+                            disqualification.</li>
+                        <li>Late submissions will not be accepted.</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card matte-panel scroll-reveal delay-1">
+                    <div class="card-icon">🤖</div>
+                    <h3>AI & Tooling</h3>
+                    <ul style="list-style-position: inside; color: var(--text-secondary); line-height: 1.8;">
+                        <li><strong>AI tools are permitted</strong> for design, ideation, and development.</li>
+                        <li>We encourage pushing the boundaries with AI.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <div class="section-divider"></div>
+
+        <!-- Rewards Section -->
+        <section id="rewards" class="section rewards-section">
+            <div class="section-header scroll-reveal">
+                <h2>VICTORY REWARDS</h2>
+                <div class="header-line"></div>
+            </div>
+
+            <div class="bento-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+                <!-- 1st Place -->
+                <div class="glass-card matte-panel scroll-reveal"
+                    style="border-color: var(--neon-secondary); box-shadow: 0 0 30px rgba(255, 140, 0, 0.15);">
+                    <div class="card-icon" style="text-shadow: 0 0 20px gold; font-size: 4rem; margin-bottom: 0;">🥇
+                    </div>
+                    <h3
+                        style="color: var(--neon-secondary); font-size: 2.2rem; text-shadow: 0 0 10px rgba(255, 140, 0, 0.5);">
+                        Grand Champions</h3>
+                    <ul
+                        style="list-style: none; color: var(--text-primary); line-height: 2; margin-top: 15px; font-weight: 500;">
+                        <li>• <strong>LIVE Feature on Xinity Platform</strong></li>
+                        <li>• Core Tech Team Spot</li>
+                        <li>• Elite Recognition & Acclaim</li>
+                        <li>• Superior Certificate of Achievement</li>
+                    </ul>
+                </div>
+
+                <!-- 2nd Place -->
+                <div class="glass-card matte-panel scroll-reveal delay-1">
+                    <div class="card-icon" style="font-size: 3rem; margin-bottom: 0;">🥈</div>
+                    <h3 style="color: #c0c0c0; font-size: 1.8rem;">2nd Place</h3>
+                    <ul style="list-style: none; color: var(--text-secondary); line-height: 2; margin-top: 15px;">
+                        <li>• Official Tech Team Placement</li>
+                        <li>• Outstanding Recognition</li>
+                        <li>• Certificate of Excellence</li>
+                    </ul>
+                </div>
+
+                <!-- 3rd Place -->
+                <div class="glass-card matte-panel scroll-reveal delay-2">
+                    <div class="card-icon" style="font-size: 3rem; margin-bottom: 0;">🥉</div>
+                    <h3 style="color: #cd7f32; font-size: 1.8rem;">3rd Place</h3>
+                    <ul style="list-style: none; color: var(--text-secondary); line-height: 2; margin-top: 15px;">
+                        <li>• Honourable Recognition</li>
+                        <li>• WebX Community Accolades</li>
+                        <li>• Certificate of Achievement</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="glass-card matte-panel scroll-reveal text-center" style="margin-top: 30px; width: 100%;">
+                <p style="color: var(--text-secondary); font-size: 1.1rem;">All participants demonstrating solid effort
+                    will receive a digital <strong>Certificate of Participation</strong> and access to our exclusive
+                    developer talent pool!</p>
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <div class="section-divider"></div>
+
+        <!-- Partners Section -->
+        <section id="partners" class="section partners-section" style="min-height: auto; padding: 80px 10%;">
+            <div class="section-header scroll-reveal" style="margin-bottom: 40px;">
+                <h2 style="font-size: 2rem;">HOST PARTNERS</h2>
+                <div class="header-line" style="width: 50px;"></div>
+            </div>
+
+            <div class="partners-grid" style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+                <!-- Unstop -->
+                <div class="glass-card matte-panel scroll-reveal text-center"
+                    style="padding: 20px 40px; min-width: 250px; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.9);">
+                    <img src="https://d8it4huxumps7.cloudfront.net/uploads/images/unstop/svg/unstop-logo.svg"
+                        alt="Unstop" style="height: 50px; object-fit: contain;">
+                </div>
+
+                <!-- Kaggle -->
+                <div class="glass-card matte-panel scroll-reveal delay-1 text-center"
+                    style="padding: 20px 40px; min-width: 250px; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.9);">
+                    <img src="https://www.kaggle.com/static/images/site-logo.svg" alt="Kaggle"
+                        style="height: 50px; object-fit: contain;">
+                </div>
+            </div>
+        </section>
+
+        <!-- Collaborative Partners Section -->
+        <section id="collaborative-partners" class="section partners-section"
+            style="min-height: auto; padding: 40px 10% 80px;">
+            <div class="section-header scroll-reveal" style="margin-bottom: 40px;">
+                <h2 style="font-size: 2rem;">COLLABORATIVE PARTNERS</h2>
+                <div class="header-line" style="width: 50px;"></div>
+            </div>
+
+            <div class="partners-grid" style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+                <!-- Geeks For Geeks -->
+                <div class="glass-card matte-panel scroll-reveal text-center"
+                    style="padding: 20px 40px; min-width: 300px; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.9);">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg" alt="GeeksforGeeks"
+                        style="height: 45px; object-fit: contain;">
+                </div>
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <div class="section-divider"></div>
+
+        <!-- Organizing Team Section -->
+        <section id="team" class="section team-section" style="padding: 100px 10%;">
+            <div class="section-header scroll-reveal">
+                <h2>ORGANIZING TEAM</h2>
+                <div class="header-line"></div>
+            </div>
+
+            <div class="bento-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+                <!-- Kiran Patil -->
+                <div class="glass-card matte-panel scroll-reveal text-center" style="padding: 30px 20px;">
+                    <img src="https://webxchallenge.xinity-officall.workers.dev/assets/KIRAN-CxLfQOQn.jpeg"
+                        alt="Kiran Patil"
+                        style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 2px solid var(--neon-secondary); box-shadow: 0 0 15px rgba(255,140,0,0.3);">
+                    <h3 style="color: var(--neon-secondary); font-size: 1.5rem; margin-bottom: 5px;">Kiran Patil</h3>
+                    <p style="color: var(--neon-primary); font-weight: 700; font-size: 1rem; margin-bottom: 5px;">
+                        Managing Head</p>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem;">Xinity Hackathon Community</p>
+                </div>
+
+                <!-- Shivam Pandey -->
+                <div class="glass-card matte-panel scroll-reveal delay-1 text-center" style="padding: 30px 20px;">
+                    <img src="https://webxchallenge.xinity-officall.workers.dev/assets/SHIVAM-DmVo2L6-.jpeg"
+                        alt="Shivam Pandey"
+                        style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 2px solid var(--neon-secondary); box-shadow: 0 0 15px rgba(255,140,0,0.3);">
+                    <h3 style="color: var(--neon-secondary); font-size: 1.5rem; margin-bottom: 5px;">Shivam Pandey</h3>
+                    <p style="color: var(--neon-primary); font-weight: 700; font-size: 1rem; margin-bottom: 5px;">Tech
+                        Head</p>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem;">Xinity Hackathon Community</p>
+                </div>
+
+                <!-- Samim Mondal -->
+                <div class="glass-card matte-panel scroll-reveal delay-2 text-center" style="padding: 30px 20px;">
+                    <img src="https://webxchallenge.xinity-officall.workers.dev/assets/SAMIM-XcJwzLcQ.jpeg"
+                        alt="Samim Mondal"
+                        style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 2px solid var(--neon-secondary); box-shadow: 0 0 15px rgba(255,140,0,0.3);">
+                    <h3 style="color: var(--neon-secondary); font-size: 1.5rem; margin-bottom: 5px;">Samim Mondal</h3>
+                    <p style="color: var(--neon-primary); font-weight: 700; font-size: 1rem; margin-bottom: 5px;">Design
+                        Head</p>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem;">Xinity Hackathon Community</p>
+                </div>
+
+                <!-- Kishan M Patil -->
+                <div class="glass-card matte-panel scroll-reveal delay-3 text-center" style="padding: 30px 20px;">
+                    <img src="https://webxchallenge.xinity-officall.workers.dev/assets/KISAN-DFTHmpTe.jpeg"
+                        alt="Kishan M Patil"
+                        style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 2px solid var(--neon-secondary); box-shadow: 0 0 15px rgba(255,140,0,0.3);">
+                    <h3 style="color: var(--neon-secondary); font-size: 1.5rem; margin-bottom: 5px;">Kishan M Patil</h3>
+                    <p style="color: var(--neon-primary); font-weight: 700; font-size: 1rem; margin-bottom: 5px;">
+                        Organising Head</p>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem;">Xinity Hackathon Community</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <div class="section-divider"></div>
+
+        <!-- Registration Terminal Section -->
+        <section id="register" class="section register-section">
+            <div class="glass-terminal scroll-reveal">
+                <div class="terminal-header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                    <div class="terminal-title">Registration Portal</div>
+                </div>
+
+                <div class="terminal-body">
+                    <h2>SECURE YOUR SLOT</h2>
+                    <p>Solo or team participation (max 3). Join the hackathon challenge.</p>
+
+                    <form id="registerForm" class="cyber-form">
+                        <div class="input-group">
+                            <label for="teamName">Team / Your Name</label>
+                            <input type="text" id="teamName" required placeholder="Enter team name">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" required placeholder="Enter email address">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="teamSize">Team Size</label>
+                            <select id="teamSize" required>
+                                <option value="" disabled selected>Select from list</option>
+                                <option value="1">Solo</option>
+                                <option value="2">Duo</option>
+                                <option value="3">Trio (Max)</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group" style="margin-bottom: 25px;">
+                            <label for="regPass">Create Passcode</label>
+                            <input type="password" id="regPass" required placeholder="Create a secure login passcode">
+                        </div>
+
+                        <button type="submit" class="btn-submit">
+                            <span>SUBMIT REGISTRATION</span>
+                            <div class="btn-backdrop"></div>
+                        </button>
+                    </form>
+                    <div id="formSuccess"
+                        style="display: none; color: var(--neon-secondary); margin-top: 1rem; text-align: center; font-family: 'Space Grotesk', sans-serif;">
+                        [Registration Successful! You may now login via the Verification Portal.]
+                    </div>
+                    <div id="formError"
+                        style="display: none; color: #ff3366; margin-top: 1rem; text-align: center; font-family: 'Space Grotesk', sans-serif;">
+                        [Error: Registration Failed.]
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Divider -->
+        <div class="section-divider"></div>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section contact-section">
+            <div class="section-header scroll-reveal">
+                <h2>CONTACT US</h2>
+                <div class="header-line"></div>
+            </div>
+
+            <div class="bento-grid">
+                <div class="glass-card matte-panel scroll-reveal text-left">
+                    <div class="card-icon">✉️</div>
+                    <h3>Get In Touch</h3>
+                    <p>Have questions about the WebX Challenge? We are here to help.</p>
+                    <br>
+                    <ul style="list-style: none; color: var(--text-secondary); line-height: 2;">
+                        <li><strong style="color: var(--neon-secondary);">Email:</strong> support@xinity-hackathon.dev
+                        </li>
+                        <li><strong style="color: var(--neon-secondary);">Discord:</strong> Xinity Community Hub</li>
+                        <li><strong style="color: var(--neon-secondary);">Location:</strong> Official Offline Venue</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card matte-panel scroll-reveal delay-1">
+                    <form id="contactForm" class="cyber-form">
+                        <div class="input-group">
+                            <label for="contactName">Full Name</label>
+                            <input type="text" id="contactName" required placeholder="Enter your name">
+                        </div>
+                        <div class="input-group">
+                            <label for="contactEmail">Email Address</label>
+                            <input type="email" id="contactEmail" required placeholder="Enter your email">
+                        </div>
+                        <div class="input-group" style="margin-bottom: 25px;">
+                            <label for="contactMessage">Your Message</label>
+                            <textarea id="contactMessage" required placeholder="Type your message here..."
+                                rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit" style="padding: 12px; font-size: 1rem;">
+                            <span>SEND MESSAGE</span>
+                            <div class="btn-backdrop"></div>
+                        </button>
+                    </form>
+                    <div id="contactSuccess"
+                        style="display: none; color: var(--neon-primary); margin-top: 1rem; text-align: center; font-family: 'Space Grotesk', sans-serif;">
+                        [Message Sent Successfully!]
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="cyber-footer">
+        <div class="footer-content">
+            <p>© 2026 XINITY HACKATHON COMMUNITY</p>
+            <div class="social-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+</body>
+
+</html>

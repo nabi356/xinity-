@@ -102,6 +102,9 @@
                         const data = await response.json();
 
                         if (response.ok && data.success) {
+                            if (data.user) {
+                                localStorage.setItem('xinity_user', JSON.stringify(data.user));
+                            }
                             window.location.href = data.redirect || '/dashboard.html';
                         } else {
                             errorBox.innerText = '[Verification Failed: ' + data.message + ']';

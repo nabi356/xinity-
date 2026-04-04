@@ -27,6 +27,9 @@ const userSchema = new mongoose.Schema({
     passcode: { type: String, required: true },
     logoData: { type: String, default: "" },
     pdfData: { type: String, default: "" },
+    isLookingForTeam: { type: Boolean, default: false },
+    elevatorPitch: { type: String, default: "" },
+    upvotes: { type: Number, default: 0 },
     createdAt: { type: Date, default: Date.now }
 });
 const User = mongoose.model('User', userSchema);
@@ -51,7 +54,7 @@ app.get('/', (req, res) => {
 // Real Registration Endpoint (Requires multipart/form-data for Logo upload)
 app.post('/api/register', upload.single('teamLogo'), async (req, res) => {
     try {
-        const { teamName, leaderName, member2Name, member3Name, collegeName, email, teamSize, passcode } = req.body;
+        const { teamName, leaderName, member2Name, member3Name, collegeName, email, teamSize, passcode, isLookingForTeam } = req.body;
         
         // Convert the RAM file buffer directly into a persistent Base64 encoded string
         const logoData = req.file ? `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}` : "";
@@ -76,7 +79,8 @@ app.post('/api/register', upload.single('teamLogo'), async (req, res) => {
             email,
             teamSize,
             passcode: hashedPasscode,
-            logoData
+            logoData,
+            isLookingForTeam: isLookingForTeam === 'true'
         });
 
         await newUser.save();
@@ -107,7 +111,12 @@ app.post('/api/login', async (req, res) => {
         }
 
         console.log(`User logged in: ${email}`);
-        res.json({ success: true, message: "Login successful", redirect: "/submissions.html" });
+        res.json({ 
+            success: true, 
+            message: "Login successful", 
+            redirect: "/submissions.html",
+            user: { email: user.email, teamName: user.teamName }
+        });
 
     } catch (error) {
         console.error("Login Error:", error);
@@ -119,7 +128,7 @@ app.post('/api/login', async (req, res) => {
 app.get('/api/teams', async (req, res) => {
     try {
         // Find all users but only return the public fields
-        const teams = await User.find({}, 'teamName leaderName member2Name member3Name collegeName logoData pdfData');
+        const teams = await User.find({}, 'teamName leaderName member2Name member3Name collegeName logoData pdfData isLookingForTeam elevatorPitch upvotes');
         res.json({ success: true, teams });
     } catch (err) {
         res.status(500).json({ success: false, message: "Error fetching teams." });
@@ -129,7 +138,7 @@ app.get('/api/teams', async (req, res) => {
 // POST Endpoint for 100MB PDF Upload
 app.post('/api/upload-pdf', upload.single('projectPdf'), async (req, res) => {
     try {
-        const { email, passcode } = req.body;
+        const { email, passcode, elevatorPitch } = req.body;
 
         // Security Validation
         const user = await User.findOne({ email });
@@ -140,14 +149,38 @@ app.post('/api/upload-pdf', upload.single('projectPdf'), async (req, res) => {
 
         if (!req.file) return res.status(400).json({ success: false, message: "No PDF file attached." });
 
-        // Save PDF Base64 text string directly into MongoDB
+        // Save PDF Base64 text string & pitch directly into MongoDB
         user.pdfData = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+        if (elevatorPitch) user.elevatorPitch = elevatorPitch;
         await user.save();
 
         res.json({ success: true, message: "PDF Uploaded successfully!" });
     } catch (err) {
         console.error("Upload Error:", err);
         res.status(500).json({ success: false, message: "Error uploading document." });
+    }
+});
+
+// POST Endpoint for Upvoting
+app.post('/api/upvote', async (req, res) => {
+    try {
+        const { targetTeamName } = req.body;
+        
+        // Simple increment logic for the prototype
+        const user = await User.findOneAndUpdate(
+            { teamName: targetTeamName },
+            { $inc: { upvotes: 1 } },
+            { new: true }
+        );
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: "Team not found." });
+        }
+
+        res.json({ success: true, newUpvotes: user.upvotes });
+    } catch (err) {
+        console.error("Upvote Error:", err);
+        res.status(500).json({ success: false, message: "Error processing vote." });
     }
 });
 

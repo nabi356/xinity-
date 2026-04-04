@@ -74,6 +74,11 @@
                 <h1 class="glitch-title" id="animatedTitle">WEB X CHALLENGE</h1>
                 <p class="subtitle fade-up delay-1">Design the future. Build the impossible. Leave a permanent mark on
                     the Xinity platform.</p>
+                <div class="defcon-clock" style="margin-top: 30px; margin-bottom: 30px; font-family: 'Space Grotesk', sans-serif; text-shadow: 0 0 10px var(--neon-primary);">
+                    <div style="color: var(--neon-primary); font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 5px;">HACKATHON COMMENCES IN</div>
+                    <div id="countdownTimer" style="font-size: 3rem; font-weight: bold; color: var(--text-primary); letter-spacing: 5px;">00:00:00:00</div>
+                </div>
+
                 <div class="cta-group fade-up delay-2">
                     <a href="#register" class="btn-primary">Register Now</a>
                     <a href="#about" class="btn-secondary">Learn More</a>
@@ -432,9 +437,14 @@
                             </select>
                         </div>
 
-                        <div class="input-group" style="margin-bottom: 25px;">
+                        <div class="input-group" style="margin-bottom: 15px;">
                             <label for="regPass">Create Passcode</label>
                             <input type="password" id="regPass" required placeholder="Create a secure login passcode">
+                        </div>
+
+                        <div class="input-group" style="margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" id="lookingForTeam" style="width: auto; margin: 0; cursor: pointer;">
+                            <label for="lookingForTeam" style="margin: 0; cursor: pointer; color: var(--neon-secondary);">Activate Lone Wolf matching (Display [RECRUITING] badge)</label>
                         </div>
 
                         <button type="submit" class="btn-submit">

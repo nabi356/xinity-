@@ -126,6 +126,9 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('teamSize', document.getElementById('teamSize').value);
             formData.append('passcode', document.getElementById('regPass').value);
             
+            const isLooking = document.getElementById('lookingForTeam') ? document.getElementById('lookingForTeam').checked : false;
+            formData.append('isLookingForTeam', isLooking);
+            
             const logoFile = document.getElementById('teamLogo').files[0];
             if (logoFile) {
                 formData.append('teamLogo', logoFile);
@@ -186,5 +189,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = '/dashboard.html';
             }, 1000);
         });
+    }
+
+    // 8. Defcon Countdown Clock Logic
+    const timerElement = document.getElementById('countdownTimer');
+    if (timerElement) {
+        // Set target date 14 days from right now for demo purposes
+        const targetDate = new Date();
+        targetDate.setDate(targetDate.getDate() + 14);
+
+        setInterval(() => {
+            const now = new Date().getTime();
+            const distance = targetDate.getTime() - now;
+
+            if (distance < 0) {
+                timerElement.innerText = "HACKING COMMENCED";
+                timerElement.style.color = "var(--neon-primary)";
+                return;
+            }
+
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            const s = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+
+            timerElement.innerText = `${d}:${h}:${m}:${s}`;
+        }, 1000);
     }
 });

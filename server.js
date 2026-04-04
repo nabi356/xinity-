@@ -34,6 +34,18 @@ const userSchema = new mongoose.Schema({
 });
 const User = mongoose.model('User', userSchema);
 
+// Define App Config Schema for global Hackathon overrides (Killswitch)
+const configSchema = new mongoose.Schema({
+    key: { type: String, required: true, unique: true },
+    value: { type: Boolean, required: true }
+});
+const AppConfig = mongoose.model('AppConfig', configSchema);
+
+// Initialize deafult config quietly
+AppConfig.findOne({ key: "submissionsLocked" }).then(doc => {
+    if (!doc) new AppConfig({ key: "submissionsLocked", value: false }).save();
+});
+
 // Configure Multer for Vercel Serverless (Memory Storage - No disk writing)
 const storage = multer.memoryStorage();
 const upload = multer({ 
@@ -138,6 +150,12 @@ app.get('/api/teams', async (req, res) => {
 // POST Endpoint for 100MB PDF Upload
 app.post('/api/upload-pdf', upload.single('projectPdf'), async (req, res) => {
     try {
+        // Enforce Lockdown Killswitch
+        const config = await AppConfig.findOne({ key: "submissionsLocked" });
+        if (config && config.value === true) {
+            return res.status(403).json({ success: false, message: "SYSTEM LOCKDOWN ENFORCED: Submissions are permanently closed." });
+        }
+
         const { email, passcode, elevatorPitch } = req.body;
 
         // Security Validation
@@ -181,6 +199,31 @@ app.post('/api/upvote', async (req, res) => {
     } catch (err) {
         console.error("Upvote Error:", err);
         res.status(500).json({ success: false, message: "Error processing vote." });
+    }
+});
+
+// GET Endpoint for global config
+app.get('/api/config', async (req, res) => {
+    try {
+        const config = await AppConfig.findOne({ key: "submissionsLocked" });
+        res.json({ success: true, isLocked: config ? config.value : false });
+    } catch (err) {
+        res.json({ success: false, isLocked: false });
+    }
+});
+
+// POST Endpoint for Admin Lockdown Killswitch
+app.post('/api/lockdown', async (req, res) => {
+    try {
+        const { locked } = req.body;
+        await AppConfig.findOneAndUpdate(
+            { key: "submissionsLocked" },
+            { value: locked === true },
+            { upsert: true }
+        );
+        res.json({ success: true, message: `System Lockdown is now ${locked ? 'ON' : 'OFF'}` });
+    } catch (err) {
+        res.status(500).json({ success: false, message: "Error changing lockdown state." });
     }
 });
 

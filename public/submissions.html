@@ -71,6 +71,7 @@
         <!-- Dynamic Gallery -->
         <section class="section" style="max-width: 1200px; margin: 0 auto;">
             <h2 class="glitch-title text-center" style="margin-bottom: 40px; font-size: 3rem;">HACKER ROSTER</h2>
+            <div id="hallOfFameContainer" style="margin-bottom: 50px; display: none;"></div>
             <div id="galleryGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px;">
                 <!-- Filled dynamically by JavaScript -->
             </div>
@@ -136,13 +137,41 @@
             // Fetch and Render Teams
             const loadTeams = async () => {
                 const grid = document.getElementById('galleryGrid');
+                const hof = document.getElementById('hallOfFameContainer');
                 try {
                     const response = await fetch('/api/teams');
                     const data = await response.json();
                     
                     if(response.ok && data.success) {
                         grid.innerHTML = '';
-                        data.teams.forEach(team => {
+                        hof.innerHTML = '';
+                        
+                        // Sort by upvotes descending
+                        data.teams.sort((a,b) => (b.upvotes || 0) - (a.upvotes || 0));
+
+                        // Render Hall of Fame
+                        if (data.teams.length > 0 && typeof data.teams[0].upvotes !== 'undefined' && data.teams[0].upvotes > 0) {
+                            const topTeam = data.teams[0];
+                            hof.style.display = 'block';
+                            const topLogo = topTeam.logoData ? topTeam.logoData : '/assets/default-team.png';
+                            hof.innerHTML = `
+                                <div class="glass-card matte-panel" style="border: 2px solid #ffd700; box-shadow: 0 0 40px rgba(255, 215, 0, 0.3); text-align: center; padding: 40px; position: relative; overflow: hidden; background: linear-gradient(135deg, rgba(255,215,0,0.05), transparent);">
+                                    <div style="position: absolute; top: 10px; right: -30px; background: #ffd700; color: #000; font-weight: bold; padding: 5px 40px; transform: rotate(45deg); font-size: 0.8rem;">#1 RANKED</div>
+                                    <img src="${topLogo}" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; border: 4px solid #ffd700; box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);">
+                                    <h3 style="color: #ffd700; font-size: 2.5rem; margin-bottom: 10px; font-family: var(--font-heading); text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);">${topTeam.teamName}</h3>
+                                    <p style="color: var(--text-primary); font-size: 1.1rem; margin-bottom: 5px;">${topTeam.collegeName}</p>
+                                    ${topTeam.elevatorPitch ? `<p style="color: #ffd700; font-style: italic; font-size: 1.2rem; margin: 15px 0;">"${topTeam.elevatorPitch}"</p>` : ''}
+                                    <button onclick="endorseTeam('${topTeam.teamName}')" style="background: transparent; border: 1px solid #ffd700; color: #ffd700; padding: 8px 20px; border-radius: 4px; cursor: pointer; font-family: 'Space Grotesk', sans-serif; transition: 0.3s; margin-top: 15px;">ENDORSE (${topTeam.upvotes})</button>
+                                </div>
+                            `;
+                        } else {
+                            hof.style.display = 'none';
+                        }
+
+                        // Render remaining teams
+                        const remainingTeams = (data.teams.length > 0 && typeof data.teams[0].upvotes !== 'undefined' && data.teams[0].upvotes > 0) ? data.teams.slice(1) : data.teams;
+
+                        remainingTeams.forEach(team => {
                             const logoSrc = team.logoData ? team.logoData : '/assets/default-team.png';
                             
                             // Feature logic
@@ -201,6 +230,19 @@
                     document.getElementById('upEmail').value = userObj.email;
                 } catch(e){}
             }
+
+            // Check Lockdown state directly
+            fetch('/api/config').then(res => res.json()).then(data => {
+                if (data.success && data.isLocked) {
+                    const uf = document.getElementById('uploadForm');
+                    if(uf) {
+                        uf.style.display = 'none';
+                        const w = document.createElement('div');
+                        w.innerHTML = '<h2 style="color: #ff3366; animation: glitch 2s infinite;">[SYSTEM LOCKDOWN ENFORCED]</h2><p style="color: var(--text-secondary);">The hackathon deadline has passed. Submissions are permanently closed.</p>';
+                        uf.parentNode.insertBefore(w, uf);
+                    }
+                }
+            });
 
             loadTeams();
         });

@@ -11,7 +11,13 @@
     <main style="padding: 50px 20px; max-width: 1200px; margin: 0 auto;">
         
         <h1 class="glitch-title" style="color: var(--neon-primary); margin-bottom: 20px;">[ADMIN OVERRIDE] HACKATHON ROSTER</h1>
-        <p style="color: var(--text-secondary); margin-bottom: 40px; font-family: 'Space Grotesk', sans-serif;">Authorized view of all registered teams and sensitive PDF project submissions.</p>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+            <p style="color: var(--text-secondary); font-family: 'Space Grotesk', sans-serif; margin: 0;">Authorized view of all registered teams and sensitive PDF project submissions.</p>
+            
+            <button id="lockdownToggleBtn" style="padding: 10px 20px; font-family: 'Space Grotesk', sans-serif; font-weight: bold; cursor: pointer; border: 2px solid #ff3366; background: rgba(255,51,102,0.1); color: #ff3366; border-radius: 4px; transition: 0.3s;">
+                LOADING SYSTEM STATE...
+            </button>
+        </div>
 
         <div style="overflow-x: auto;">
             <table style="width: 100%; border-collapse: collapse; background: var(--matte-panel); border: 1px solid var(--matte-border);">
@@ -66,6 +72,53 @@
             } catch (err) {
                 tableBody.innerHTML = '<tr><td colspan="4" style="color: red; padding: 15px;">Failed to load data.</td></tr>';
             }
+
+            // Lockdown Logic
+            const lockdownBtn = document.getElementById('lockdownToggleBtn');
+            let isCurrentlyLocked = false;
+            
+            const updateBtnUI = (locked) => {
+                isCurrentlyLocked = locked;
+                if(locked) {
+                    lockdownBtn.innerText = "SYSTEM LOCKED (UNLOCK)";
+                    lockdownBtn.style.color = "#00f0ff";
+                    lockdownBtn.style.borderColor = "#00f0ff";
+                    lockdownBtn.style.background = "rgba(0,240,255,0.1)";
+                } else {
+                    lockdownBtn.innerText = "FORCE LOCKDOWN";
+                    lockdownBtn.style.color = "#ff3366";
+                    lockdownBtn.style.borderColor = "#ff3366";
+                    lockdownBtn.style.background = "rgba(255,51,102,0.1)";
+                }
+            };
+
+            // Fetch Initial State
+            try {
+                const cfgRes = await fetch('/api/config');
+                const cfgData = await cfgRes.json();
+                updateBtnUI(cfgData.isLocked);
+            } catch(e) {}
+
+            lockdownBtn.addEventListener('click', async () => {
+                const intent = !isCurrentlyLocked;
+                if(confirm(intent ? "WARNING: Lock all submissions?" : "Unlock submissions?")) {
+                    try {
+                        const res = await fetch('/api/lockdown', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ locked: intent })
+                        });
+                        const data = await res.json();
+                        if(data.success) {
+                            updateBtnUI(intent);
+                        } else {
+                            alert("Failed to toggle system.");
+                        }
+                    } catch(e) {
+                        alert("Network error.");
+                    }
+                }
+            });
         });
     </script>
 </body>
